@@ -5,7 +5,7 @@ def create_app():
 
     #  add our new animals blueprint
     from flask import Blueprint
-    from .routes.animals import animals_bp
+    from .routes.animal import animals_bp
 
     app.register_blueprint(animals_bp)
 
