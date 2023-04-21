@@ -20,16 +20,16 @@ def handle_animals():
     sapphire_animals_as_dict = [vars(animal) for animal in sapphire_animals]
     return jsonify(sapphire_animals_as_dict), 200
 
-@animals_bp.route("/<variable_that_represents_animal_id_in_path>", methods=['GET'])
-def handle_animal(variable_that_represents_animal_id_in_path):
+@animals_bp.route("/<animal_id>", methods=['GET'])
+def handle_animal(animal_id):
     try:
-        animal_id = int(variable_that_represents_animal_id_in_path)
+        animal_id = int(animal_id)
     except:
-        return {'msg': f"Invalid id '{variable_that_represents_animal_id_in_path}'"}, 400
+        return {'msg': f"Invalid id '{animal_id}'"}, 400
     for animal in sapphire_animals:
         if animal.id == animal_id:
             return {
                 'id': animal.id,
                 'name': animal.name
             }, 200
-    return {'msg': f"No animal with id {variable_that_represents_animal_id_in_path}"}, 404
+    return {'msg': f"No animal with id {animal_id}"}, 404
