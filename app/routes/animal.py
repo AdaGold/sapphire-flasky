@@ -10,7 +10,7 @@ class Animal():
 sapphire_animals = [
     Animal(1, "Anaconda", "Nikki Minaj", "Jungle"),
     Animal(2, "Elephant", "Dumbo", "Our childhood!!!"),
-    Animal(3, "Unicorn", "Charlie", "Youtube")
+    Animal(3, "Unicorn", "Not Charlie", "Youtube")
 ]
 
 animals_bp = Blueprint("animals", __name__, url_prefix="/animals")
