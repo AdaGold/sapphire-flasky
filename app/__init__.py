@@ -19,6 +19,10 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
+
+    from app.models.animal import Animal
+
+
     #  add our new animals blueprint
     from flask import Blueprint
     from .routes.animal import animals_bp
