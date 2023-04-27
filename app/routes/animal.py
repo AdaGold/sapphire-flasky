@@ -25,10 +25,7 @@ def handle_animals():
     all_animals = Animal.query.all()
     animals_response = []
     for animal in all_animals:
-        animals_response.append({
-            "id": animal.id,
-            "name": animal.name
-        })
+        animals_response.append(animal.to_dict())
     return jsonify(animals_response), 200
 
 @animals_bp.route("/<animal_id>", methods=["GET"])
