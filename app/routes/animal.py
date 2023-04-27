@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify, abort, make_response, request
 from app.models.animal import Animal
 from app import db
 
-
 def validate_animal(animal_id):
     try:
         animal_id = int(animal_id)
@@ -40,16 +39,12 @@ def handle_animal(animal_id):
         "name": animal.name
     }, 200
 
-# POST to /animals
 @animals_bp.route("", methods=['POST'])
 def create_animal():
-    # Get the name from the request body
+    # Get the data from the request body
     request_body = request.get_json()
-    print(request_body)
-    print("HELLOOOO????", request_body["name"])
 
     # Use it to make an Animal
-
     new_animal = Animal(name=request_body["name"])
 
     # Persist (save, commit) it in the database
@@ -60,5 +55,5 @@ def create_animal():
     return {
         "id": new_animal.id,
         "name": new_animal.name,
-        "for fun another thing": "Successfully created"
+        "msg": "Successfully created"
     }, 201
