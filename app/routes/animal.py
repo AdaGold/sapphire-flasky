@@ -8,13 +8,11 @@ def validate_animal(animal_id):
     except:
         abort(make_response({'msg': f"Invalid id '{animal_id}'"}, 400))
 
-    # How do I get all of the animals from the DB?
-    all_animals = Animal.query.all()
+    animal = Animal.query.get(animal_id)
 
-    for animal in all_animals:
-        if animal.id == animal_id:
-            return animal
-    return abort(make_response({'msg': f"No animal with id {animal_id}"}, 404))
+    return animal if animal else abort(make_response({'msg': f"No animal with id {animal_id}"}, 404))
+
+
 
 # All routes defined with animals_bp start with url_prefix (/animals)
 animals_bp = Blueprint("animals", __name__, url_prefix="/animals")
