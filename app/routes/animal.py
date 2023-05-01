@@ -25,6 +25,7 @@ def handle_animals():
         animals_response.append(animal.to_dict())
     return jsonify(animals_response), 200
 
+
 @animals_bp.route("", methods=['POST'])
 def create_animal():
     # Get the data from the request body
@@ -45,7 +46,6 @@ def create_animal():
     }, 201
 
 
-
 @animals_bp.route("/<animal_id>", methods=["GET"])
 def handle_animal(animal_id):
     animal = validate_animal(animal_id)
@@ -56,15 +56,12 @@ def handle_animal(animal_id):
 
 @animals_bp.route("/<animal_id>", methods=["PUT"])
 def update_one_animal(animal_id):
-    # Get the data from the request body
     request_body = request.get_json()
-
     animal_to_update = validate_animal(animal_id)
-
     animal_to_update.name = request_body["name"]
 
     db.session.commit()
-
+    
     return animal_to_update.to_dict(), 200
 
 
