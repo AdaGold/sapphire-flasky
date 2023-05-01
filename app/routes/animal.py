@@ -13,7 +13,6 @@ def validate_animal(animal_id):
     return animal if animal else abort(make_response({'msg': f"No animal with id {animal_id}"}, 404))
 
 
-
 # All routes defined with animals_bp start with url_prefix (/animals)
 animals_bp = Blueprint("animals", __name__, url_prefix="/animals")
 
@@ -25,14 +24,6 @@ def handle_animals():
     for animal in all_animals:
         animals_response.append(animal.to_dict())
     return jsonify(animals_response), 200
-
-@animals_bp.route("/<animal_id>", methods=["GET"])
-def handle_animal(animal_id):
-    animal = validate_animal(animal_id)
-    return {
-        "id": animal.id,
-        "name": animal.name
-    }, 200
 
 @animals_bp.route("", methods=['POST'])
 def create_animal():
@@ -52,3 +43,30 @@ def create_animal():
         "name": new_animal.name,
         "msg": "Successfully created"
     }, 201
+
+
+
+@animals_bp.route("/<animal_id>", methods=["GET"])
+def handle_animal(animal_id):
+    animal = validate_animal(animal_id)
+    return {
+        "id": animal.id,
+        "name": animal.name
+    }, 200
+
+@animals_bp.route("/<animal_id>", methods=["PUT"])
+def update_one_animal(animal_id):
+    # Get the data from the request body
+    request_body = request.get_json()
+
+    animal_to_update = validate_animal(animal_id)
+
+    animal_to_update.name = request_body["name"]
+
+    db.session.commit()
+
+    return animal_to_update.to_dict(), 200
+
+
+
+
