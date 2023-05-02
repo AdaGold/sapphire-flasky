@@ -18,10 +18,13 @@ animals_bp = Blueprint("animals", __name__, url_prefix="/animals")
 
 @animals_bp.route("", methods=['GET'])
 def handle_animals():
-    # all_animals is a list of Animal instances! We should use them as Animal instances, and access their values via .
-    all_animals = Animal.query.all()
+    name_query = request.args.get("name")
+    if name_query:
+        animals = Animal.query.filter_by(name=name_query)
+    else:
+        animals = Animal.query.all()
     animals_response = []
-    for animal in all_animals:
+    for animal in animals:
         animals_response.append(animal.to_dict())
     return jsonify(animals_response), 200
 
