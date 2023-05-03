@@ -7,6 +7,7 @@ class Animal(db.Model):
     species = db.Column(db.String(80))
     age = db.Column(db.Integer)
 
+
     def to_dict(self):
         return {
             "id": self.id,
