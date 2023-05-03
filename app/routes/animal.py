@@ -61,13 +61,14 @@ def handle_animal(animal_id):
 def update_one_animal(animal_id):
     request_body = request.get_json()
     animal_to_update = validate_animal(animal_id)
+    
     animal_to_update.name = request_body["name"]
     animal_to_update.species = request_body["species"]
     animal_to_update.age = request_body["age"]
 
     db.session.commit()
     
-    return animal_to_update.to_dict(), 200
+    return jsonify(animal_to_update.to_dict()), 200
 
 
 @animals_bp.route("/<animal_id>", methods=["DELETE"])

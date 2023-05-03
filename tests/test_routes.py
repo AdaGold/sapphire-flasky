@@ -36,3 +36,41 @@ def test_get_all_animals_with_populated_db(client, three_animals):
             "age": 100
         }
     ]
+
+def test_get_one_animal_empty_db_returns_404(client):
+    response = client.get("/animals/1")
+    assert response.status_code == 404
+
+def test_returns_400_with_invalid_animal_id(client):
+    response = client.get("/animals/Furby")
+    assert response.status_code == 400
+
+def test_post_one_animal_creates_animal_in_db(client):
+    response = client.post("/animals", json={
+        "name": "Clifford",
+        "species": "BIG dog",
+        "age": 2
+        }
+    )
+
+    response_body = response.get_json()
+
+    assert response.status_code == 201
+    assert response_body["id"] == 1
+    assert response_body["name"] == "Clifford"
+    assert "msg" in response_body
+
+def test_update_one_animal_updates_animal_in_db(client, three_animals):
+    response = client.put("/animals/3", json={
+        "name": "Foxy fox",
+        "species": "Fox",
+        "age": 200
+    })
+
+    response_body = response.get_json()
+
+    assert response.status_code == 200
+    assert response_body["id"] == 3
+    assert response_body["name"] == "Foxy fox"
+    assert response_body["species"] == "Fox"
+
