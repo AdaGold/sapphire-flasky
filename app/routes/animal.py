@@ -35,7 +35,7 @@ def create_animal():
     request_body = request.get_json()
 
     # Use it to make an Animal
-    new_animal = Animal(name=request_body["name"])
+    new_animal = Animal(name=request_body["name"], species=request_body["species"], age=request_body["age"])
 
     # Persist (save, commit) it in the database
     db.session.add(new_animal)
@@ -62,6 +62,8 @@ def update_one_animal(animal_id):
     request_body = request.get_json()
     animal_to_update = validate_animal(animal_id)
     animal_to_update.name = request_body["name"]
+    animal_to_update.species = request_body["species"]
+    animal_to_update.age = request_body["age"]
 
     db.session.commit()
     

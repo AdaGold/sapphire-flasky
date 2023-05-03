@@ -3,6 +3,7 @@
 Revision ID: 46cc5d4a45a7
 Revises: 
 Create Date: 2023-04-27 11:23:07.748514
+MEMO: THIS IS WHERE I ADDED ANIMAL
 
 """
 from alembic import op
