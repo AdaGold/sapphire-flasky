@@ -3,14 +3,15 @@ from app.models.animal import Animal
 from app import db
 
 def get_valid_item_by_id(id):
+    model = Animal
     try:
         id = int(id)
     except:
         abort(make_response({'msg': f"Invalid id '{id}'"}, 400))
 
-    item = Animal.query.get(id)
+    item = model.query.get(id)
 
-    return item if item else abort(make_response({'msg': f"No {Animal.__name__} with id {id}"}, 404))
+    return item if item else abort(make_response({'msg': f"No {model.__name__} with id {id}"}, 404))
 
 
 # All routes defined with animals_bp start with url_prefix (/animals)
