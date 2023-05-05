@@ -18,7 +18,7 @@ class Animal(db.Model):
 
     @classmethod
     def from_dict(cls, animal_details):
-        new_animal = Animal(
+        new_animal = cls(
             name=animal_details["name"],
             species=animal_details["species"],
             age=animal_details["age"]
