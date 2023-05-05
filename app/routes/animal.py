@@ -28,21 +28,13 @@ def handle_animals():
         animals_response.append(animal.to_dict())
     return jsonify(animals_response), 200
 
-def make_animal(animal_details):
-    new_animal = Animal(
-        name=animal_details["name"],
-        species=animal_details["species"],
-        age=animal_details["age"]
-    )
-    return new_animal
-
 @animals_bp.route("", methods=['POST'])
 def create_animal():
     # Get the data from the request body
     request_body = request.get_json()
 
     # Use it to make an Animal
-    new_animal = make_animal(request_body)
+    new_animal = Animal.from_dict(request_body)
 
     # Persist (save, commit) it in the database
     db.session.add(new_animal)
