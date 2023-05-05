@@ -2,8 +2,7 @@ from flask import Blueprint, jsonify, abort, make_response, request
 from app.models.animal import Animal
 from app import db
 
-def get_valid_item_by_id(id):
-    model = Animal
+def get_valid_item_by_id(model, id):
     try:
         id = int(id)
     except:
@@ -51,13 +50,13 @@ def create_animal():
 
 @animals_bp.route("/<animal_id>", methods=["GET"])
 def handle_animal(animal_id):
-    animal = get_valid_item_by_id(animal_id)
+    animal = get_valid_item_by_id(Animal, animal_id)
     return animal.to_dict(), 200
 
 @animals_bp.route("/<animal_id>", methods=["PUT"])
 def update_one_animal(animal_id):
     request_body = request.get_json()
-    animal_to_update = get_valid_item_by_id(animal_id)
+    animal_to_update = get_valid_item_by_id(Animal, animal_id)
     
     animal_to_update.name = request_body["name"]
     animal_to_update.species = request_body["species"]
@@ -70,7 +69,7 @@ def update_one_animal(animal_id):
 
 @animals_bp.route("/<animal_id>", methods=["DELETE"])
 def delete_one_animal(animal_id):
-    animal_to_delete = get_valid_item_by_id(animal_id)
+    animal_to_delete = get_valid_item_by_id(Animal, animal_id)
 
     db.session.delete(animal_to_delete)
     db.session.commit()
