@@ -74,3 +74,14 @@ def test_update_one_animal_updates_animal_in_db(client, three_animals):
     assert response_body["name"] == "Foxy fox"
     assert response_body["species"] == "Fox"
 
+def test_get_one_valid_animal_in_db(client, three_animals):
+    # ACT
+    response = client.get('/animals/1')
+    response_body = response.get_json()
+
+    # ASSERT
+    assert response.status_code == 200
+    assert response_body["id"] == 1
+    assert response_body["name"] == "Furby"
+    assert response_body["species"] == "Cat"
+    assert response_body["age"] == 17

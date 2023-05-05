@@ -54,7 +54,9 @@ def handle_animal(animal_id):
     animal = validate_animal(animal_id)
     return {
         "id": animal.id,
-        "name": animal.name
+        "name": animal.name,
+        "age": animal.age,
+        "species": animal.species
     }, 200
 
 @animals_bp.route("/<animal_id>", methods=["PUT"])
