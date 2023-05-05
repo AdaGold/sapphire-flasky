@@ -52,12 +52,7 @@ def create_animal():
 @animals_bp.route("/<animal_id>", methods=["GET"])
 def handle_animal(animal_id):
     animal = validate_animal(animal_id)
-    animal_data = {
-        "id": animal.id,
-        "name": animal.name,
-        "species": animal.species,
-        "age": animal.age
-    }
+    animal_data = animal.to_dict()
     return animal_data, 200
 
 @animals_bp.route("/<animal_id>", methods=["PUT"])
