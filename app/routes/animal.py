@@ -2,15 +2,15 @@ from flask import Blueprint, jsonify, abort, make_response, request
 from app.models.animal import Animal
 from app import db
 
-def validate_animal(id):
+def get_valid_item_by_id(id):
     try:
         id = int(id)
     except:
         abort(make_response({'msg': f"Invalid id '{id}'"}, 400))
 
-    animal = Animal.query.get(id)
+    item = Animal.query.get(id)
 
-    return animal if animal else abort(make_response({'msg': f"No animal with id {id}"}, 404))
+    return item if item else abort(make_response({'msg': f"No {Animal.__name__} with id {id}"}, 404))
 
 
 # All routes defined with animals_bp start with url_prefix (/animals)
@@ -50,13 +50,13 @@ def create_animal():
 
 @animals_bp.route("/<animal_id>", methods=["GET"])
 def handle_animal(animal_id):
-    animal = validate_animal(animal_id)
+    animal = get_valid_item_by_id(animal_id)
     return animal.to_dict(), 200
 
 @animals_bp.route("/<animal_id>", methods=["PUT"])
 def update_one_animal(animal_id):
     request_body = request.get_json()
-    animal_to_update = validate_animal(animal_id)
+    animal_to_update = get_valid_item_by_id(animal_id)
     
     animal_to_update.name = request_body["name"]
     animal_to_update.species = request_body["species"]
@@ -69,7 +69,7 @@ def update_one_animal(animal_id):
 
 @animals_bp.route("/<animal_id>", methods=["DELETE"])
 def delete_one_animal(animal_id):
-    animal_to_delete = validate_animal(animal_id)
+    animal_to_delete = get_valid_item_by_id(animal_id)
 
     db.session.delete(animal_to_delete)
     db.session.commit()
