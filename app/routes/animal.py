@@ -2,15 +2,15 @@ from flask import Blueprint, jsonify, abort, make_response, request
 from app.models.animal import Animal
 from app import db
 
-def validate_animal(animal_id):
+def validate_animal(id):
     try:
-        animal_id = int(animal_id)
+        id = int(id)
     except:
-        abort(make_response({'msg': f"Invalid id '{animal_id}'"}, 400))
+        abort(make_response({'msg': f"Invalid id '{id}'"}, 400))
 
-    animal = Animal.query.get(animal_id)
+    animal = Animal.query.get(id)
 
-    return animal if animal else abort(make_response({'msg': f"No animal with id {animal_id}"}, 404))
+    return animal if animal else abort(make_response({'msg': f"No animal with id {id}"}, 404))
 
 
 # All routes defined with animals_bp start with url_prefix (/animals)
