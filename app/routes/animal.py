@@ -65,7 +65,7 @@ def update_one_animal(animal_id):
 
     db.session.commit()
     
-    return jsonify(animal_to_update.to_dict()), 200
+    return animal_to_update.to_dict(), 200
 
 
 @animals_bp.route("/<animal_id>", methods=["DELETE"])
