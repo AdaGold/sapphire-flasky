@@ -1,17 +1,7 @@
 from flask import Blueprint, jsonify, abort, make_response, request
 from app.models.animal import Animal
 from app import db
-
-def get_valid_item_by_id(model, id):
-    try:
-        id = int(id)
-    except:
-        abort(make_response({'msg': f"Invalid id '{id}'"}, 400))
-
-    item = model.query.get(id)
-
-    return item if item else abort(make_response({'msg': f"No {model.__name__} with id {id}"}, 404))
-
+from app.routes.routes_helper import get_valid_item_by_id
 
 # All routes defined with animals_bp start with url_prefix (/animals)
 animals_bp = Blueprint("animals", __name__, url_prefix="/animals")
