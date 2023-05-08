@@ -27,6 +27,7 @@ def create_app(testing=None):
 
 
     from app.models.animal import Animal
+    from app.models.sanctuary import Sanctuary
 
 
     #  add our new animals blueprint
