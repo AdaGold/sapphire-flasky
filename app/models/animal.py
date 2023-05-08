@@ -16,7 +16,8 @@ class Animal(db.Model):
             "id": self.id,
             "name": self.name,
             "species": self.species,
-            "age": self.age
+            "age": self.age,
+            "sanctuary_id": self.sanctuary_id
         }
 
     @classmethod
@@ -24,7 +25,8 @@ class Animal(db.Model):
         new_animal = cls(
             name=animal_details["name"],
             species=animal_details["species"],
-            age=animal_details["age"]
+            age=animal_details["age"],
+            sanctuary_id=animal_details["sanctuary_id"]
         )
         return new_animal
 
