@@ -18,7 +18,7 @@ def create_app(testing=None):
     app = Flask(__name__)
 
     if testing is None:
-        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DEV_DATABASE_URI')
+        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('RENDER_DATABASE_URI')
     else:
         app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('TEST_DATABASE_URI')
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
