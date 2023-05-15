@@ -28,6 +28,7 @@ def create_app(testing=None):
 
     from app.models.animal import Animal
     from app.models.sanctuary import Sanctuary
+    from app.models.caretaker import Caretaker
 
     from flask import Blueprint
 
@@ -38,5 +39,8 @@ def create_app(testing=None):
     # add our new Sanctuary blueprint
     from .routes.sanctuary import sanctuaries_bp
     app.register_blueprint(sanctuaries_bp)
+
+    from .routes.caretaker import caretaker_bp
+    app.register_blueprint(caretaker_bp)
 
     return app 
