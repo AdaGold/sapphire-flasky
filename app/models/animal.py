@@ -7,6 +7,9 @@ class Animal(db.Model):
     species = db.Column(db.String(80))
     age = db.Column(db.Integer)
 
+    # Given an instance of Animal, get list of caretakers with animal.caretakers
+    caretakers = db.relationship("Caretaker", secondary="animal_caretaker", backref="animals")
+
     sanctuary_id = db.Column(db.Integer, db.ForeignKey('sanctuary.id'))
     sanctuary = db.relationship("Sanctuary", back_populates="animals")
 

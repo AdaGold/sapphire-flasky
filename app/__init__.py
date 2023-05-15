@@ -29,6 +29,7 @@ def create_app(testing=None):
     from app.models.animal import Animal
     from app.models.sanctuary import Sanctuary
     from app.models.caretaker import Caretaker
+    from app.models.AnimalCaretaker import AnimalCaretaker
 
     from flask import Blueprint
 
