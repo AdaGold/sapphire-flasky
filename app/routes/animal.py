@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, abort, make_response, request
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy import inspect, desc
+from sqlalchemy import inspect, asc
 from app.models.animal import Animal
 from app import db
 from app.routes.routes_helper import get_valid_item_by_id
@@ -14,7 +14,7 @@ def handle_animals():
     if name_query:
         animals = Animal.query.filter_by(name=name_query)
     else:
-        animals = Animal.query.order_by(desc(Animal.id)).all()
+        animals = Animal.query.order_by(asc(Animal.id)).all()
     animals_response = []
     for animal in animals:
         animals_response.append(animal.to_dict())
