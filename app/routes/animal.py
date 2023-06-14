@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, abort, make_response, request
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy import inspect, asc
 from app.models.animal import Animal
 from app import db
 from app.routes.routes_helper import get_valid_item_by_id
@@ -12,7 +14,7 @@ def handle_animals():
     if name_query:
         animals = Animal.query.filter_by(name=name_query)
     else:
-        animals = Animal.query.all()
+        animals = Animal.query.order_by(asc(Animal.id)).all()
     animals_response = []
     for animal in animals:
         animals_response.append(animal.to_dict())
@@ -54,6 +56,26 @@ def update_one_animal(animal_id):
 
     db.session.commit()
     
+    return animal_to_update.to_dict(), 200
+
+@animals_bp.route("/<animal_id>", methods=["PATCH"])
+def patch_one_animal(animal_id):
+    animal_to_update = get_valid_item_by_id(Animal, animal_id)
+    request_body = request.get_json()
+
+    # Get all the column keys from Animal, and see if they're in the request.
+    # If they are, update the values of animal_to_update using values from the request.
+    mapper = inspect(Animal)
+    for column in mapper.attrs:
+        key = column.key
+        if key in request_body:
+            setattr(animal_to_update, key, request_body[key])
+
+    try:
+        db.session.commit()
+    except IntegrityError:
+        abort(make_response({'msg': f"Animal id {request_body['id']} is already in use'"}, 400))
+
     return animal_to_update.to_dict(), 200
 
 
