@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
+from flask_cors import CORS
 import os
 
 db = SQLAlchemy()
@@ -16,6 +17,7 @@ The responsibility of create_app is to:
 """
 def create_app(testing=None):
     app = Flask(__name__)
+    CORS(app)
 
     if testing is None:
         app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('RENDER_DATABASE_URI')
